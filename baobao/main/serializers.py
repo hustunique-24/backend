@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from main.models import message
 from main.models import User, message
@@ -16,7 +17,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         # fields = '__all__'
-        fields = ('bao_id', 'owner_id', 'password', 'human1_age', 'human1_status', 'human2_age', 'human2_status', 'ip')
+        fields = ('User','bao_id', 'human1_age', 'human1_status', 'human2_age', 'human2_status', 'ip')
+
 
 
 # User = models.ForeignKey('User',on_delete=models.CASCADE)
@@ -28,3 +30,20 @@ class MessageSerializer(serializers.ModelSerializer):
         model = message
         # fields = '__all__'
         fields = ('User', 'type', 'time', 'content')
+
+
+UserModel = get_user_model()
+#  注册绑定
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    password = serializers.CharField(write_only=True)
+    class Meta:
+        model = User
+        fields = ('username', 'password')
+    def create(self, validated_data):
+        user = UserModel.objects.create(
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        User.objects.create(User=user)
+        user.save()
+        return user

@@ -1,18 +1,17 @@
 import uuid
 
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 # 1.用户表（主键id 抱枕序列号 用户-子女id 密码 地址 主人1年龄  身体1状况 主人2年龄 主人 身体2状况 ip）
 
 class User(models.Model):
+    # 用户 - 子女id 密码
+    User = models.OneToOneField('auth.User', unique=True, verbose_name='用户信息',on_delete=models.CASCADE)
     # 抱枕序列号
     bao_id = models.CharField(max_length=16)
-    # 用户-子女 id
-    owner_id = models.CharField(max_length=16)
-    # 密码
-    password = models.CharField(max_length=64)
     # 地址
     palce = models.CharField(max_length=64)
     # 主人1 年龄
