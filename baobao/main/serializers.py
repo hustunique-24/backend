@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from main.models import message
-from main.models import User, message
+from main.models import UserProfile, message, User
 
 
 # # 抱枕序列号 bao_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -13,13 +13,17 @@ from main.models import User, message
 # # 主人2 年龄 human2_age = models.IntegerField()
 # # 主人2 身体状况 human2_status = models.CharField(max_length=64)
 # # ip ip = models.CharField(max_length=64)
-class UserSerializer(serializers.ModelSerializer):
+
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = UserProfile
+#         # fields = '__all__'
+#         fields = ('User','bao_id', 'human1_age', 'human1_status', 'human2_age', 'human2_status', 'ip')
+
+class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
-        # fields = '__all__'
-        fields = ('User','bao_id', 'human1_age', 'human1_status', 'human2_age', 'human2_status', 'ip')
-
-
+        model = UserProfile
+        fields = ('url', 'bao_id', 'palce', 'human', 'human_status','human_xue','human_sex')
 
 # User = models.ForeignKey('User',on_delete=models.CASCADE)
 # type = models.CharField(max_length=64)
@@ -33,17 +37,43 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 UserModel = get_user_model()
-#  注册绑定
+
+
+# - 注册
+# User = models.OneToOneField('auth.User', unique=True, verbose_name='用户信息', on_delete=models.CASCADE)
+# # 抱枕序列号
+# bao_id = models.CharField(max_length=16)
+# # 地址
+# palce = models.CharField(max_length=64)
+#
+# # 主人1 个人信息
+# human = models.IntegerField()
+# human_status = models.CharField(max_length=64)
+# human_xue = models.IntegerField()
+# human_sex = models.CharField(max_length=10)
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(write_only=True)
+    bao_id = serializers.CharField(write_only=True)
+    human = serializers.IntegerField(write_only=True)
+    human_status = serializers.CharField(write_only=True)
+    human_xue = serializers.IntegerField(write_only=True)
+    human_sex = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
-        fields = ('username', 'password')
+        fields = ('username', 'password','bao_id','human','human_status','human_xue','human_sex')
+
     def create(self, validated_data):
         user = UserModel.objects.create(
-            username=validated_data['username']
+            username=validated_data['username'],
         )
+        bao_id = validated_data['bao_id']
+        human = validated_data['human']
+        human_status = validated_data['human_status']
+        human_xue = validated_data['human_xue']
+        human_sex = validated_data['human_sex']
         user.set_password(validated_data['password'])
-        User.objects.create(User=user)
+        UserProfile.objects.create(User=user,bao_id=bao_id,human=human,human_status=human_status,human_sex=human_sex,human_xue=human_xue)
         user.save()
         return user
+

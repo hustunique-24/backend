@@ -20,14 +20,8 @@ from rest_framework.routers import DefaultRouter
 from main import views
 from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
 
-router = DefaultRouter()
-
-router.register(r'User', views.UserViewSet)
-router.register(r'Message',views.MessageViewSet)
-router.register(r'register',views.CreatUserView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api/', include(router.urls)),
-    url(r'^api-auth/', obtain_jwt_token),  # POST email=email&password=password
+    url(r'', include('main.urls')),
 ]
