@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from main.models import message
-from main.models import UserProfile, message, User
+from main.models import UserProfile, message, User,WenShi
 import django_filters.rest_framework
 
 
@@ -20,6 +20,11 @@ import django_filters.rest_framework
 #         model = UserProfile
 #         # fields = '__all__'
 #         fields = ('User','bao_id', 'human1_age', 'human1_status', 'human2_age', 'human2_status', 'ip')
+class WenDu_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = WenShi
+        fields = {'Wendu','Shidu','Time','Heart'}
+
 class UserProfile_Message(serializers.RelatedField):
     def to_representation(self, value):
         return '%s' % value.User.username
@@ -37,6 +42,7 @@ class MessageSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = ('User', 'type', 'time', 'content')
 
+
 class MessageSerializer(serializers.HyperlinkedModelSerializer):
 
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
@@ -45,10 +51,17 @@ class MessageSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('User','type', 'time', 'content')
 
 
+
 class Message_Detail_Serializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = message
         fields = ('User', 'type', 'time', 'content')
+
+
+class WenDu_Serializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = WenShi
+        fields = ('Wendu','Shidu','Time')
 
 UserModel = get_user_model()
 

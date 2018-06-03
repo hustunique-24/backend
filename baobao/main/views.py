@@ -6,12 +6,30 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
-from main.models import UserProfile, message
+from main.models import UserProfile, message,WenShi
 from main.serializers import UserSerializer
 from main.serializers import UserProfileSerializer
 from main.serializers import MessageSerializer
+from main.serializers import WenDu_Serializer
 from rest_framework import viewsets, generics, permissions, mixins, serializers
 
+
+# class WenshiList(viewsets.ModelViewSet):
+#     queryset = WenShi.objects.all()
+#     serializer_class = WenDu_Serializer
+
+class WenshiList(mixins.ListModelMixin,
+                      mixins.CreateModelMixin,
+                      generics.GenericAPIView):
+    queryset = WenShi.objects.all().order_by('-Time')
+    serializer_class = WenDu_Serializer
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 class UserProfileList(generics.ListAPIView):
     queryset = UserProfile.objects.all()
@@ -34,7 +52,9 @@ class Message_Up_List(mixins.ListModelMixin,
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
+        print(request)
         return self.create(request, *args, **kwargs)
+
 
 
 class Message_Up_Detail(generics.RetrieveUpdateDestroyAPIView):
@@ -49,10 +69,12 @@ class CreatUserView(CreateAPIView):
     permission_classes = (permissions.AllowAny,)
 
 
+
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
         'userprofile': reverse('userprofile-list', request=request, format=format),
         'register': reverse('register', request=request, format=format),
         'up-message': reverse('message-up-list', request=request, format=format),
+        'WenshiList':reverse('WenshiList',request=request, format=format)
     })

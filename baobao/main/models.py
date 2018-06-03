@@ -22,6 +22,12 @@ class UserProfile(models.Model):
     human_sex = models.CharField(max_length=10)
 
 
+class WenShi(models.Model):
+    Wendu = models.IntegerField()
+    Shidu = models.IntegerField()
+    Time = models.DateTimeField(auto_created=True)
+    Heart = models.IntegerField(default=60)
+
 # 2.消息记录（主键id  外键:用户表主键id 提醒类别 提醒时间 提醒内容)
 class message(models.Model):
     User = models.ForeignKey('main.UserProfile', on_delete=models.CASCADE,related_name='UserProfile_Message')

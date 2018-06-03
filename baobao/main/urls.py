@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^login/', obtain_jwt_token, name='login'),
     url(r'^message/$', views.Message_Up_List.as_view(), name='message-up-list'),
     url(r'^message/(?P<pk>[0-9]+)/$', views.Message_Up_Detail.as_view(), name='message-detail'),
+    url(r'^wenshi/$',views.WenshiList.as_view(),name='WenshiList'),
     # url(r'^loop/picture/$', views.PictureList.as_view(), name='picture-list'),
     # url(r'^loop/picture/(?P<pk>[0-9]+)/$', views.PictureDetail.as_view(), name='picture-detail'),
     # url(r'^loop/comment/$', views.CommentList.as_view(), name='comment-list'),
