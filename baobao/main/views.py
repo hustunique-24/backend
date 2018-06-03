@@ -28,6 +28,7 @@ class Message_Up_List(mixins.ListModelMixin,
                       generics.GenericAPIView):
     queryset = message.objects.all().order_by('-time')
     serializer_class = MessageSerializer
+    permission_classes = (permissions.AllowAny,)
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -39,6 +40,7 @@ class Message_Up_List(mixins.ListModelMixin,
 class Message_Up_Detail(generics.RetrieveUpdateDestroyAPIView):
     queryset = message.objects.all()
     serializer_class = MessageSerializer
+    permission_classes = (permissions.AllowAny,)
 
 
 class CreatUserView(CreateAPIView):
