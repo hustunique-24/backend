@@ -2,6 +2,8 @@
 backend
 
 ## API 2.0
+### API ROOT
+**http://hack.laphets.com:8080/**
 ### 绑定操作 同时也是注册新用户的操作
 **POST /register**
 
@@ -10,7 +12,7 @@ backend
     "username": "", //用户名
     "password": "", //密码
     "bao_id": "", //抱枕ID
-    "human": null, // 老人的年龄
+    "human_age": null, // 老人的年龄
     "human_status": "", //老人的状态 可以是文字
     "human_xue": null, //老人的血型
     "human_sex": "" //老人的性别
@@ -58,7 +60,8 @@ Authorization:JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2Vyb
 
 
 ### 获取用户基本信息
-**Get /userprofile/<id>/**
+**Get /userprofile/id/**
+
 例如：Get userprofile/2/
 返回：
 
@@ -78,7 +81,7 @@ Authorization:JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2Vyb
 ```
 
 
-### 获得消息 ？
+### 获得消息
 **GET /api/Message/**
 
 ```
@@ -93,11 +96,17 @@ Authorization:JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2Vyb
 
 ```
 
-### 发送消息 ？
-**POST /api/Message/**
+### 发送消息
+**POST /Message/**
 
 ```json
 
+{
+    "User":“http://hack.laphets.com:8080/userprofile/1/”, 发送的是 用户对应的url
+    "type": "text", // 消息类型 目前只有 text
+    "time": “2018-06-03T10:11:00Z”, // 发送时间 格式为2018-06-03T10:11:00Z
+    "content": "" //内容
+}
 
 ```
 

@@ -19,22 +19,34 @@ from main.models import UserProfile, message, User
 #         model = UserProfile
 #         # fields = '__all__'
 #         fields = ('User','bao_id', 'human1_age', 'human1_status', 'human2_age', 'human2_status', 'ip')
+class UserProfile_Message(serializers.RelatedField):
+    def to_representation(self, value):
+        return '%s' % value.User.username
+
 
 class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('url', 'bao_id', 'palce', 'human', 'human_status','human_xue','human_sex')
+        fields = ('url', 'bao_id', 'UserProfile_Message', 'palce', 'human_age', 'human_status', 'human_xue', 'human_sex')
 
-# User = models.ForeignKey('User',on_delete=models.CASCADE)
-# type = models.CharField(max_length=64)
-# time = models.DateTimeField()
-# content = models.CharField(max_length=64)
+
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = message
         # fields = '__all__'
         fields = ('User', 'type', 'time', 'content')
 
+class MessageSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = message
+        fields = ('User','type', 'time', 'content')
+
+
+class Message_Detail_Serializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = message
+        fields = ('User', 'type', 'time', 'content')
 
 UserModel = get_user_model()
 
@@ -54,26 +66,26 @@ UserModel = get_user_model()
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(write_only=True)
     bao_id = serializers.CharField(write_only=True)
-    human = serializers.IntegerField(write_only=True)
+    human_age = serializers.IntegerField(write_only=True)
     human_status = serializers.CharField(write_only=True)
-    human_xue = serializers.IntegerField(write_only=True)
+    human_xue = serializers.CharField(write_only=True)
     human_sex = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ('username', 'password','bao_id','human','human_status','human_xue','human_sex')
+        fields = ('username', 'password', 'bao_id', 'human_age', 'human_status', 'human_xue', 'human_sex')
 
     def create(self, validated_data):
         user = UserModel.objects.create(
             username=validated_data['username'],
         )
         bao_id = validated_data['bao_id']
-        human = validated_data['human']
+        human_age = validated_data['human_age']
         human_status = validated_data['human_status']
         human_xue = validated_data['human_xue']
         human_sex = validated_data['human_sex']
         user.set_password(validated_data['password'])
-        UserProfile.objects.create(User=user,bao_id=bao_id,human=human,human_status=human_status,human_sex=human_sex,human_xue=human_xue)
+        UserProfile.objects.create(User=user, bao_id=bao_id, human_age=human_age, human_status=human_status,
+                                   human_sex=human_sex, human_xue=human_xue)
         user.save()
         return user
-

@@ -16,15 +16,15 @@ class UserProfile(models.Model):
     palce = models.CharField(max_length=64)
 
     # 主人1 个人信息
-    human = models.IntegerField()
+    human_age = models.IntegerField()
     human_status = models.CharField(max_length=64)
-    human_xue = models.IntegerField()
+    human_xue = models.CharField(max_length=64)
     human_sex = models.CharField(max_length=10)
 
 
 # 2.消息记录（主键id  外键:用户表主键id 提醒类别 提醒时间 提醒内容)
 class message(models.Model):
-    User = models.ForeignKey('main.UserProfile', on_delete=models.CASCADE)
+    User = models.ForeignKey('main.UserProfile', on_delete=models.CASCADE,related_name='UserProfile_Message')
     type = models.CharField(max_length=64)
     time = models.DateTimeField()
     content = models.CharField(max_length=64)
