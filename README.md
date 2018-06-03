@@ -32,7 +32,7 @@ backend
         "palce": "", //用户地址
         "human_age": 18, // 年龄
         "human_status": "hhh", // 老人状态
-        "human_xue": "B", // 老人学型
+        "human_xue": "B", // 老人血型
         "human_sex": "男" // 老人性别
     }
 ]
