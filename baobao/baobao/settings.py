@@ -81,8 +81,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'baobao',
         'USER': 'root',
-        # 'PASSWORD': 'zxcpoi123',
-        'PASSWORD': 'Hackday24',
+        'PASSWORD': 'zxcpoi123',
+       # 'PASSWORD': 'Hackday24',
         'HOST': '127.0.0.1',
     }
 }
@@ -132,6 +132,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
 STATIC_URL = '/static/'

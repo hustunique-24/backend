@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from main.models import message
 from main.models import UserProfile, message, User
+import django_filters.rest_framework
 
 
 # # 抱枕序列号 bao_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -38,6 +39,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
 class MessageSerializer(serializers.HyperlinkedModelSerializer):
 
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     class Meta:
         model = message
         fields = ('User','type', 'time', 'content')
