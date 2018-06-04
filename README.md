@@ -1,9 +1,24 @@
 # backend
 backend
+## PPT
+![Slide01](http://p0xjmrizh.bkt.clouddn.com/Slide01.png)
+![Slide02](http://p0xjmrizh.bkt.clouddn.com/Slide02.png)
+![Slide03](http://p0xjmrizh.bkt.clouddn.com/Slide03.png)
+![Slide04](http://p0xjmrizh.bkt.clouddn.com/Slide04.png)
+![Slide05](http://p0xjmrizh.bkt.clouddn.com/Slide05.png)
+![Slide06](http://p0xjmrizh.bkt.clouddn.com/Slide06.png)
+![Slide07](http://p0xjmrizh.bkt.clouddn.com/Slide07.png)
+![Slide08](http://p0xjmrizh.bkt.clouddn.com/Slide08.png)
+![Slide09](http://p0xjmrizh.bkt.clouddn.com/Slide09.png)
+![Slide10](http://p0xjmrizh.bkt.clouddn.com/Slide10.png)
+![Slide11](http://p0xjmrizh.bkt.clouddn.com/Slide11.png)
+![Slide12](http://p0xjmrizh.bkt.clouddn.com/Slide12.png)
+![Slide13](http://p0xjmrizh.bkt.clouddn.com/Slide13.png)
 
-## API 2.0
+## API 2.0 
 ### API ROOT
-**http://hack.laphets.com:8080/**
+**http://******:8080/api** 
+比赛结束后已经停止了维护，最新的API文档也不在这里
 ### 绑定操作 同时也是注册新用户的操作
 **POST /register**
 
